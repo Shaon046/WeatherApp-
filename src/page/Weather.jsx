@@ -57,14 +57,11 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
+
 const Weather = () => {
   const [location, setLocation] = useState("");
   const [apiData, setApiData] = useState(null);
   const [theme, setTheme] = useState("light");
-
-
-
-
 
   // input handler function
   const inputOnchangeHandler = (eve) => {
@@ -210,10 +207,7 @@ const Weather = () => {
             <p className="text-lg pt-2">
               <span>{apiData ? apiData.weather[0].main : ""}</span>
               <span> </span>
-              <span>
-                {apiData ? `${apiData.main.temp_max}°C / ` : ""}
-              </span>
-              <span>{apiData ? `${apiData.main.temp_min}°C / ` : ""}</span>
+        
             </p>
             <div
               className="rounded-full px-4 mt-4"
@@ -245,16 +239,32 @@ const Weather = () => {
                 <tr>
                   <td className="w-1/2 text-start px-4">Feels like</td>
                   <td className="w-1/2 text-end px-4">
-                    {apiData ? apiData.main.feels_like : ""}
+                  {apiData ?` ${apiData.main.feels_like }°C`: ""}
+                  </td>
+                </tr>
+                <tr className="py-1">
+                  <td className="w-1/2 text-start px-4">Min temperature </td>
+                  <td className="w-1/2 text-end px-4">
+                    {apiData ? `${apiData.main.temp_min}°C` : ""}
                   </td>
                 </tr>
 
+                <tr className="py-1">
+                  <td className="w-1/2 text-start px-4">Min temperature </td>
+                  <td className="w-1/2 text-end px-4">
+                    {apiData ? `${apiData.main.temp_max}°C ` : ""}
+                  </td>
+                </tr>
                 <tr className="py-1">
                   <td className="w-1/2 text-start px-4">Humidity</td>
                   <td className="w-1/2 text-end px-4">
                     {apiData ? `${apiData.main.humidity}%` : ""}
                   </td>
                 </tr>
+
+
+              
+              
               </tbody>
             </table>
           </div>
