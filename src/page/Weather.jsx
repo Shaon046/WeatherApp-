@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AirIcon from "@mui/icons-material/Air";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+
 import Switch from "@mui/material/Switch";
 import { styled } from "@mui/material";
 
 import clear from "../assets/clear_sky.jpg";
-import cloudy from "../assets/cloudy.jpg";
-import fog_mist from "../assets/fogmist.jpg";
-import Rain from "../assets/Rain.jpg";
-import snow from "../assets/snow.jpg";
-import thunder from "../assets/thunder.jpg";
+
 
 import axios from "axios";
 
