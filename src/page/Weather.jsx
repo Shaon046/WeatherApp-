@@ -8,8 +8,6 @@ import Switch from "@mui/material/Switch";
 import { styled } from "@mui/material";
 
 import clear from "../assets/clear_sky.jpg";
-
-
 import axios from "axios";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -63,6 +61,10 @@ const Weather = () => {
   const [location, setLocation] = useState("");
   const [apiData, setApiData] = useState(null);
   const [theme, setTheme] = useState("light");
+
+
+
+
 
   // input handler function
   const inputOnchangeHandler = (eve) => {
@@ -164,7 +166,7 @@ const Weather = () => {
         <div className="flex flex-col items-center w-full">
           <p
             className={` ${
-              apiData && apiData.name.length < 20 ? "text-4xl" : "text-2xl"
+              apiData && apiData.name.length < 20 ? "text-4xl" : "text-xl"
             } text-4xl text-center font-semibold py-4 px-2 max-w-full truncate`}
           >
             {apiData ? apiData.name : "Please enter a location"}
@@ -234,7 +236,7 @@ const Weather = () => {
             <table className="w-full ">
               <tbody>
                 <tr>
-                  <td className="w-1/2 text-start px-4">description</td>
+                  <td className="w-1/2 text-start px-4">Description</td>
                   <td className="w-1/2 text-end px-4">
                     {apiData ? apiData.weather[0].description : ""}
                   </td>
@@ -248,9 +250,9 @@ const Weather = () => {
                 </tr>
 
                 <tr className="py-1">
-                  <td className="w-1/2 text-start px-4">humidity</td>
+                  <td className="w-1/2 text-start px-4">Humidity</td>
                   <td className="w-1/2 text-end px-4">
-                    {apiData ? apiData.main.humidity : ""}
+                    {apiData ? `${apiData.main.humidity}%` : ""}
                   </td>
                 </tr>
               </tbody>
