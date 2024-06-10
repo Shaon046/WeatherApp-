@@ -209,9 +209,9 @@ const Weather = () => {
               <span>{apiData ? apiData.weather[0].main : ""}</span>
               <span> </span>
               <span>
-                {apiData ? apiData.main.temp_max + "°" + "c" + "/" : ""}
+                {apiData ? `${apiData.main.temp_max}°C / ` : ""}
               </span>
-              <span>{apiData ? apiData.main.temp_min + "°" + "c" : ""}</span>
+              <span>{apiData ? `${apiData.main.temp_min}°C / ` : ""}</span>
             </p>
             <div
               className="rounded-full px-4 mt-4"
