@@ -262,7 +262,7 @@ const Weather = () => {
                 </tr>
 
                 <tr className="py-1">
-                  <td className="w-1/2 text-start px-4">Min Temperature </td>
+                  <td className="w-1/2 text-start px-4">Max Temperature </td>
                   <td className="w-1/2 text-end px-4">
                     {apiData ? `${apiData.main.temp_max}°C ` : ""}
                   </td>
