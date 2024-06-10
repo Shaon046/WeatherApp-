@@ -67,7 +67,7 @@ const Weather = () => {
   const [location, setLocation] = useState("");
   const [apiData, setApiData] = useState(null);
   const [theme, setTheme] = useState("light");
-const [curretTime,setCurrentTime]=
+
   // input handler function
   const inputOnchangeHandler = (eve) => {
     setLocation(eve.target.value);
@@ -84,25 +84,23 @@ const [curretTime,setCurrentTime]=
     }
   };
 
+  // Function to get current time
 
-
-
- // Function to get current time based on timezone offset
- const getCurrentTime = (offset) => {
-  const currentTime = new Date(new Date().getTime() + offset * 1000);
-  const options = {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-    month: "short",
-    day: "numeric",
-    weekday: "short",
-  };
-  return currentTime.toLocaleString("en-US", options);
-};
-
-
-
+  function getCurrentTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const seconds = now.getSeconds().toString().padStart(2, "0");
+    return `${hours}:${minutes}:${seconds}`;
+  }
+  // Function to get current date
+  function getCurrentDate() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, "0");
+    const day = now.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
 
   //search button handler
   // API CALL
@@ -117,20 +115,7 @@ const [curretTime,setCurrentTime]=
     }
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 
   return (
     <div
@@ -217,11 +202,12 @@ const [curretTime,setCurrentTime]=
             {/* Time And Date */}
             <p className="flex font-semibold pt-1" style={{ fontSize: "12px" }}>
               <span className="flex items-center px-4">
-                <CalendarMonthIcon style={{ fontSize: "12px" }} /> 20/12/21
+                <CalendarMonthIcon style={{ fontSize: "12px" }} />{" "}
+                {getCurrentDate()}
               </span>{" "}
               <span className="flex items-center px-4">
                 <AccessTimeIcon style={{ fontSize: "12px" }} />
-                2:40am
+                {getCurrentTime()}
               </span>
             </p>
 
