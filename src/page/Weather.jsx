@@ -63,6 +63,12 @@ const Weather = () => {
   const [apiData, setApiData] = useState(null);
   const [theme, setTheme] = useState("light");
 
+  function toInitCap(str) {
+    return str.split(' ').map(word => {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }).join(' ');
+}
+
   // input handler function
   const inputOnchangeHandler = (eve) => {
     setLocation(eve.target.value);
@@ -96,6 +102,12 @@ const Weather = () => {
     const day = now.getDate().toString().padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
+
+
+
+
+
+
 
   //search button handler
   // API CALL
@@ -204,7 +216,7 @@ const Weather = () => {
               </span>
             </p>
 
-            <p className="text-lg pt-2">
+            <p className="text-lg pt-2 font-semibold">
               <span>{apiData ? apiData.weather[0].main : ""}</span>
               <span> </span>
         
@@ -216,7 +228,7 @@ const Weather = () => {
               <span>
                 <AirIcon />{" "}
               </span>{" "}
-              <span>Wind speed:</span>{" "}
+              <span>Wind Speed:</span>{" "}
               <span>{apiData ? apiData.wind.speed : ""}</span>
               <span>/{apiData ? apiData.wind.deg : ""}°</span>
             </div>
@@ -224,7 +236,7 @@ const Weather = () => {
 
           {/* Other details */}
           <div
-            className="flex flex-grow items-center w-[90%] m-auto my-4 rounded-xl xs:py-8 md:p-1 xs:text-lg md:text-md transition-all duration-600  "
+            className="flex flex-grow items-center w-[90%] m-auto my-4 rounded-xl xs:py-8 md:p-1 xs:text-md md:text-sm transition-all duration-600  "
             style={{ backgroundColor: "rgba(255, 255, 255, 0.119)" }}
           >
             <table className="w-full ">
@@ -232,25 +244,25 @@ const Weather = () => {
                 <tr>
                   <td className="w-1/2 text-start px-4">Description</td>
                   <td className="w-1/2 text-end px-4">
-                    {apiData ? apiData.weather[0].description : ""}
+                    {apiData ?toInitCap( apiData.weather[0].description) : ""}
                   </td>
                 </tr>
 
                 <tr>
-                  <td className="w-1/2 text-start px-4">Feels like</td>
+                  <td className="w-1/2 text-start px-4">Feels Like</td>
                   <td className="w-1/2 text-end px-4">
                   {apiData ?` ${apiData.main.feels_like }°C`: ""}
                   </td>
                 </tr>
                 <tr className="py-1">
-                  <td className="w-1/2 text-start px-4">Min temperature </td>
+                  <td className="w-1/2 text-start px-4">Min Temperature </td>
                   <td className="w-1/2 text-end px-4">
                     {apiData ? `${apiData.main.temp_min}°C` : ""}
                   </td>
                 </tr>
 
                 <tr className="py-1">
-                  <td className="w-1/2 text-start px-4">Min temperature </td>
+                  <td className="w-1/2 text-start px-4">Min Temperature </td>
                   <td className="w-1/2 text-end px-4">
                     {apiData ? `${apiData.main.temp_max}°C ` : ""}
                   </td>
