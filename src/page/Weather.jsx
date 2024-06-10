@@ -1,13 +1,13 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import AirIcon from "@mui/icons-material/Air";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-
 import Switch from "@mui/material/Switch";
 import { styled } from "@mui/material";
+import backgroundSeter from "../utils/BackgroundReturn";
 
-import clear from "../assets/clear_sky.jpg";
+import clear from "../assets/clear.jpg";
 import axios from "axios";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -57,17 +57,19 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-
 const Weather = () => {
   const [location, setLocation] = useState("");
   const [apiData, setApiData] = useState(null);
   const [theme, setTheme] = useState("light");
-
+  const [error, setError] = useState(null);
   function toInitCap(str) {
-    return str.split(' ').map(word => {
+    return str
+      .split(" ")
+      .map((word) => {
         return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    }).join(' ');
-}
+      })
+      .join(" ");
+  }
 
   // input handler function
   const inputOnchangeHandler = (eve) => {
@@ -103,24 +105,32 @@ const Weather = () => {
     return `${year}-${month}-${day}`;
   }
 
-
-
-
-
-
-
   //search button handler
   // API CALL
-  const searchOnclickHandler = async () => {
+  const searchOnclickHandler = async (eve) => {
     try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=101599b709375b2e22901d4a8d53a5c9`
-      );
-      setApiData(response.data);
+      if (location.trim() !== "") {
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=101599b709375b2e22901d4a8d53a5c9`
+        );
+        setApiData(response.data);
+      }
     } catch (err) {
-      console.log(err);
+      setApiData(null);
+      setError(err);
     }
   };
+
+
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      searchOnclickHandler()
+    }
+};
+
+
+  console.log(apiData && apiData.data, "hello");
 
   return (
     <div
@@ -129,7 +139,9 @@ const Weather = () => {
       }`}
       style={{
         position: "relative",
-        backgroundImage: `url(${clear})`,
+        backgroundImage: `url(${
+          apiData ? backgroundSeter(apiData.weather[0].main) : clear
+        })`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
       }}
@@ -178,7 +190,11 @@ const Weather = () => {
               apiData && apiData.name.length < 20 ? "text-4xl" : "text-xl"
             } text-4xl text-center font-semibold py-4 px-2 max-w-full truncate`}
           >
-            {apiData ? apiData.name : "Please enter a location"}
+            {apiData
+              ? apiData.name
+              : error
+              ? "Location not found"
+              : "Please enter a location"}
           </p>
           <div className="bg-slate-200 flex overflow-hidden rounded-lg text-gray-950">
             <input
@@ -186,8 +202,10 @@ const Weather = () => {
               className="px-4 py-2 focus:outline-none"
               placeholder="Location"
               onChange={inputOnchangeHandler}
+              onKeyPress={handleKeyPress}
             />
             <button onClick={searchOnclickHandler}>
+
               <SearchIcon />
             </button>
           </div>
@@ -219,7 +237,6 @@ const Weather = () => {
             <p className="text-lg pt-2 font-semibold">
               <span>{apiData ? apiData.weather[0].main : ""}</span>
               <span> </span>
-        
             </p>
             <div
               className="rounded-full px-4 mt-4"
@@ -236,7 +253,7 @@ const Weather = () => {
 
           {/* Other details */}
           <div
-            className="flex flex-grow items-center w-[90%] m-auto my-4 rounded-xl xs:py-8 md:p-1 xs:text-md md:text-sm transition-all duration-600  "
+            className="flex flex-grow items-center w-[90%] m-auto my-4 rounded-xl xs:py-8 md:p-1  text-sm transition-all duration-600  "
             style={{ backgroundColor: "rgba(255, 255, 255, 0.119)" }}
           >
             <table className="w-full ">
@@ -244,14 +261,14 @@ const Weather = () => {
                 <tr>
                   <td className="w-1/2 text-start px-4">Description</td>
                   <td className="w-1/2 text-end px-4">
-                    {apiData ?toInitCap( apiData.weather[0].description) : ""}
+                    {apiData ? toInitCap(apiData.weather[0].description) : ""}
                   </td>
                 </tr>
 
                 <tr>
                   <td className="w-1/2 text-start px-4">Feels Like</td>
                   <td className="w-1/2 text-end px-4">
-                  {apiData ?` ${apiData.main.feels_like }°C`: ""}
+                    {apiData ? ` ${apiData.main.feels_like}°C` : ""}
                   </td>
                 </tr>
                 <tr className="py-1">
@@ -273,10 +290,6 @@ const Weather = () => {
                     {apiData ? `${apiData.main.humidity}%` : ""}
                   </td>
                 </tr>
-
-
-              
-              
               </tbody>
             </table>
           </div>
